@@ -1,25 +1,31 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useMemo } from 'react';
+import { Heading1Typo } from './atoms/typographys/Typographys';
+import { useDispatch, useSelector } from 'react-redux';
+import { RootState } from './redux/store';
+import { setBrowserWidth } from './redux/createSlice/uiSettingSlice';
+import { styled } from 'styled-components';
+import { Header } from './components/headers/Header';
+
+export const AppContainer = styled.div`
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+`
 
 function App() {
+  const dispatch = useDispatch();
+
+  useMemo(()=>{
+    window.addEventListener("resize",()=>{
+      dispatch(setBrowserWidth(window.innerWidth));
+    })
+  },[]);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <AppContainer>
+      <Header/>
+    </AppContainer>
   );
 }
 
